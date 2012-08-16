@@ -1,0 +1,4 @@
+<launch>
+  <machine name="c1" address="brett1" default="true"/>
+  <machine name="c2" address="brett2" env-loader="$(env ROS_ENV_LOADER)"/>
+</launch>

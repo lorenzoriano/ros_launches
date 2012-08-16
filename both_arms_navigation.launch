@@ -1,0 +1,24 @@
+<launch>
+
+  <!-- load perception -->
+  <include file="laser-perception.launch"/>
+
+  <!-- load move_arm -->
+  <include file="move_left_arm.launch"/>
+  <include file="move_right_arm.launch"/>
+
+  <!-- load planning_environment -->
+  <include file="environment_server.launch"/>
+
+  <!-- load planning -->
+  <include file="ompl_planning.launch"/>
+
+  <!-- load filters -->
+  <include file="trajectory_filter.launch"/>
+
+  <!-- load ik -->
+  <include file="left_arm_collision_free_ik.launch"/>
+  <include file="right_arm_collision_free_ik.launch"/>
+
+</launch>
+

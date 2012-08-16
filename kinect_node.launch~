@@ -1,0 +1,33 @@
+<launch>
+    <arg name="kinect_frame_prefix" default="/head_mount_kinect" />
+    <arg name="kinect_camera_name" default="head_mount_kinect" />
+    <arg name="high_res" default="false" />
+    <include file="$(env ROBOT).machine" />
+
+    <node pkg="openni_camera_deprecated" type="openni_node" name="openni_node1" output="screen" respawn="true" machine="c1">
+	    <param name="device_id" value="#1"/>
+	    <rosparam command="load" file="$(find openni_camera_deprecated)/info/openni_params.yaml" />
+	    <param name="rgb_frame_id" value="$(arg kinect_frame_prefix)_rgb_optical_frame" />
+	    <param name="depth_frame_id" value="$(arg kinect_frame_prefix)_depth_optical_frame" />
+	    <param name="use_indices" value="false" />
+	    <param name="depth_registration" value="true" />
+	    <param unless="$(arg high_res)" name="image_mode" value="2" />
+	    <param if="$(arg high_res)" name="image_mode" value="1" />
+	    <param name="image_mode" value="2" />
+	    <param name="depth_mode" value="2" />
+	    <param name="debayering" value="2" />
+	    <param name="depth_time_offset" value="0" />
+	    <param name="image_time_offset" value="0" />
+	    <remap from="camera" to="$(arg kinect_camera_name)" />
+	    <remap from="/$(arg kinect_camera_name)/rgb/points" to="/$(arg kinect_camera_name)/depth_registered/points" />
+    </node>
+
+      <!-- Tim provided this really awesome kinect monitor to kill the openni_node stupidness -->
+      <node pkg="pr2_object_manipulation_launch" type="kinect_monitor.py" name="kinect_monitor" machine="c1">
+        <param name="kinect_node_name" value="openni_node1" />
+        <param name="grace_period" value="15" />
+        <remap from="camera_info" to="/$(arg kinect_camera_name)/rgb/camera_info" />
+      </node>
+</launch>
+
+
