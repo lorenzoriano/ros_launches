@@ -1,8 +1,0 @@
-<launch>
-   <include file="$(env ROBOT).machine" />
-   <arg name="arm_name" default="right" />	
-
-   <node machine="c2" pkg="pr2_trajectory_markers" type="trajectory_markers" name="pr2_trajectory_markers_right" output="screen"
-	args="$(arg arm_name)">    
-   </node>
-</launch>

@@ -1,6 +1,6 @@
 <launch>
-   <include file="$(env ROBOT).machine" />	
-   <include file="pr2_planning_environment.launch" />
+   <include file="$(find ros_launches)/launch/machine/$(env ROBOT).machine" />	
+   <include file="$(find ros_launches)/launch/arm_navigation/pr2_planning_environment.launch" />
 
    <node machine="c2" pkg="pr2_arm_kinematics_constraint_aware" type="pr2_arm_kinematics_constraint_aware" name="pr2_right_arm_kinematics" output="screen">    
       <!-- IK parameters -->

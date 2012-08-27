@@ -1,0 +1,19 @@
+<package>
+  <description brief="ros_launches">
+
+     octomap_fiter
+
+  </description>
+  <author>Lorenzo Riano</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/ros_launches</url>
+  <depend package="roscpp"/>
+  <depend package="pr2_3dnav"/>
+  <depend package="pr2_tabletop_manipulation_launch" />
+
+  
+
+</package>
+
+
