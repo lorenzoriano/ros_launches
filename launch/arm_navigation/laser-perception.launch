@@ -36,7 +36,7 @@
 
 
   <!-- load octomap filter> -->
-    <node if="$(arg use_octomap_filtering)" machine="c2" name="octomap_filters" pkg="octomap_filters" type="octomap_filter_node" >
+    <node if="$(arg use_octomap_filtering)" name="octomap_filters" pkg="octomap_filters" type="octomap_filter_node" >
         <remap from="filtered_collision_map_out" to="collision_map_occ"/>
     </node>
 
