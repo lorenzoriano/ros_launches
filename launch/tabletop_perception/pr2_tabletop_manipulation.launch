@@ -10,6 +10,7 @@
   <arg name="kinect_frame_prefix" default="/camera"/>
   <arg name="kinect_camera_name" default="head_mount_kinect" />
   <arg name="sim" default="false"/>
+  <arg name="use_octomap_filtering" default="true" />
 
   <!-- client for object database running on remote server at Willow Garage -->
   <!-- DOES NOT WORK IN TRUNK RIGHT NOW -->
@@ -27,6 +28,7 @@
     <arg name="stereo" value="$(arg stereo)"/>    
     <arg name="use_left_arm" value="$(arg use_left_arm)"/>    
     <arg name="use_right_arm" value="$(arg use_right_arm)"/>    
+    <arg name="use_octomap_filtering" value="$(arg use_octomap_filtering)"/>
   </include>
 
   <!-- manipulation -->
