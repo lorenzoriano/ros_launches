@@ -35,6 +35,11 @@
   </node>
 
 
+  <!-- load octomap filter> -->
+    <node if="$(arg use_octomap_filtering)" machine="c2" name="octomap_filters" pkg="octomap_filters" type="octomap_filter_node" >
+        <remap from="filtered_collision_map_out" to="collision_map_occ"/>
+    </node>
+
   <node pkg="collider" type="collider_node" name="collider_node" respawn="true" output="screen">
      <param name="fixed_frame" type="string" value="base_link" />
      <param name="resolution" type="double" value="0.02" />
