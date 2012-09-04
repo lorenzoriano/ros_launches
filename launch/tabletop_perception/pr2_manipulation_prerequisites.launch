@@ -7,6 +7,7 @@
   <arg name="kinect_frame_prefix" default="" />
   <arg name="kinect_camera_name" default="kinect_rgb" />
   <arg name="log_to_warehouse" default="false" />
+  <arg name="high_res" default="false" />
   <arg name="sim" default="false" />
   <arg name="tod" default="false" />
   <arg name="use_octomap_filtering" default="false" />
@@ -78,5 +79,25 @@
 
   <!-- joint trajectory normalization -->
   <include file="$(find trajectory_filter_server)/launch/trajectory_unnormalize.launch"/>
+
+  <!-- kinect stuff -->
+  <group unless="$(arg stereo)">
+    <group unless="$(arg sim)">
+      <!-- start the Kinect -->
+      <!-- USING arg use_left_arm IS A TOTALLY AWFUL HACK BECAUSE ROSLAUNCH IS DIFFICULT -->
+      <include if="$(arg use_left_arm)" file="$(find rgbd_assembler)/launch/openni_node.launch">
+        <arg name="kinect_frame_prefix" value="$(arg kinect_frame_prefix)"/>
+        <arg name="kinect_camera_name" value="$(arg kinect_camera_name)"/>
+        <arg name="high_res" value="$(arg high_res)"/>
+      </include>
+
+      <!-- Tim provided this really awesome kinect monitor to kill the openni_node stupidness -->
+      <node pkg="pr2_object_manipulation_launch" type="kinect_monitor.py" name="kinect_monitor" >
+        <param name="kinect_node_name" value="openni_node1" />
+        <param name="grace_period" value="15" />
+        <remap from="camera_info" to="/$(arg kinect_camera_name)/rgb/camera_info" />
+      </node>
+    </group>
+  </group>
 
 </launch>

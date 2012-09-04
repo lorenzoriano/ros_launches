@@ -8,7 +8,7 @@
   <arg name="log_to_warehouse" default="false"/>
   <arg name="flatten_table" default="false"/>
   <arg name="kinect_frame_prefix" default="/camera"/>
-  <arg name="kinect_camera_name" default="head_mount_kinect" />
+  <arg name="kinect_camera_name" default="kinect_rgb" />
   <arg name="sim" default="false"/>
   <arg name="use_octomap_filtering" default="true" />
 
@@ -29,6 +29,8 @@
     <arg name="use_left_arm" value="$(arg use_left_arm)"/>    
     <arg name="use_right_arm" value="$(arg use_right_arm)"/>    
     <arg name="use_octomap_filtering" value="$(arg use_octomap_filtering)"/>
+    <arg name="kinect_frame_prefix" value="$(arg kinect_frame_prefix)"/>
+    <arg name="kinect_camera_name" value="$(arg kinect_camera_name)" />
   </include>
 
   <!-- manipulation -->
