@@ -14,8 +14,8 @@
         filter_field_name: x
         filter_limit_min: 0
         filter_limit_max: 0.5
-        input_frame: /r_wrist_roll_link
-        output_frame: /r_wrist_roll_link
+        input_frame: /l_wrist_roll_link
+        output_frame: /l_wrist_roll_link
       </rosparam>
     </node>
 
@@ -24,10 +24,10 @@
       <remap from="~input" to="psx/output" />
       <rosparam>
         filter_field_name: y
-        filter_limit_min: -0.25
-        filter_limit_max: 0.25
-        input_frame: /r_wrist_roll_link
-        output_frame: /r_wrist_roll_link
+        filter_limit_min: -1.0
+        filter_limit_max: 1.0
+        input_frame: /l_wrist_roll_link
+        output_frame: /l_wrist_roll_link
       </rosparam>
     </node>
 
@@ -37,10 +37,10 @@
       <remap from="~output" to="/kinect_rgb/depth_registered/points_box_filtered" />
       <rosparam>
         filter_field_name: z
-        filter_limit_min: -0.25
-        filter_limit_max: 0.25
-        input_frame: /r_wrist_roll_link
-        output_frame: /r_wrist_roll_link
+        filter_limit_min: -1.0
+        filter_limit_max: 1.0
+        input_frame: /l_wrist_roll_link
+        output_frame: /l_wrist_roll_link
       </rosparam>
     </node>
   </group>
