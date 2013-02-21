@@ -3,11 +3,54 @@
   <include file="$(find ros_launches)/launch/machine/$(env ROBOT).machine" />
   
 
+  <group ns="/pcl_filters">
+    <!-- PCL Manager -->
+    <node pkg="nodelet" type="nodelet" name="box_filter_pcl_manager" args="manager" output="screen" machine="c1"/>
+
+    <!-- Run a passthrough filter to delimit in x direction -->
+    <node pkg="nodelet" type="nodelet" name="psx" args="load pcl/PassThrough box_filter_pcl_manager" output="screen" machine="c1">
+      <remap from="~input" to="/kinect_rgb/depth_registered/points" />
+      <rosparam>
+        filter_field_name: x
+        filter_limit_min: 0
+        filter_limit_max: 0.5
+        input_frame: /r_wrist_roll_link
+        output_frame: /r_wrist_roll_link
+      </rosparam>
+    </node>
+
+    <!-- Run a passthrough filter to delimit in y direction -->
+    <node pkg="nodelet" type="nodelet" name="psy" args="load pcl/PassThrough box_filter_pcl_manager" output="screen" machine="c1">
+      <remap from="~input" to="psx/output" />
+      <rosparam>
+        filter_field_name: y
+        filter_limit_min: -0.25
+        filter_limit_max: 0.25
+        input_frame: /r_wrist_roll_link
+        output_frame: /r_wrist_roll_link
+      </rosparam>
+    </node>
+
+    <!-- Run a passthrough filter to delimit in z direction -->
+    <node pkg="nodelet" type="nodelet" name="psz" args="load pcl/PassThrough box_filter_pcl_manager" output="screen" machine="c1">
+      <remap from="~input" to="psy/output" />
+      <remap from="~output" to="/kinect_rgb/depth_registered/points_box_filtered" />
+      <rosparam>
+        filter_field_name: z
+        filter_limit_min: -0.25
+        filter_limit_max: 0.25
+        input_frame: /r_wrist_roll_link
+        output_frame: /r_wrist_roll_link
+      </rosparam>
+    </node>
+  </group>
+
   <!-- self filter laser scans -->
   <node pkg="robot_self_filter_color" type="self_filter_color" respawn="true" name="kinect_self_filter" output="screen" machine="c1">
-     <remap from="cloud_in" to="/kinect_rgb/depth_registered/points" />
+     <remap from="cloud_in" to="/kinect_rgb/depth_registered/points_box_filtered" />
      <remap from="cloud_out" to="/kinect_rgb/depth_registered/points_self_filtered" />
-     <param name="sensor_frame" type="string" value="camera_link" />        
+     <!-- <param name="sensor_frame" type="string" value="r_wrist_roll_link" />       -->
+     <param name="sensor_frame" type="string" value=""/>
      <param name="subsample_value" type="double" value="0.0"/>
      <rosparam command="load" file="$(find pr2_arm_navigation_perception)/config/self_filter_right_left.yaml" />
   </node>
