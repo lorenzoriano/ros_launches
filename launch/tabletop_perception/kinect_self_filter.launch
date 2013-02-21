@@ -1,0 +1,15 @@
+<launch>
+
+  <include file="$(find ros_launches)/launch/machine/$(env ROBOT).machine" />
+  
+
+  <!-- self filter laser scans -->
+  <node pkg="robot_self_filter_color" type="self_filter_color" respawn="true" name="kinect_self_filter" output="screen" machine="c1">
+     <remap from="cloud_in" to="/kinect_rgb/depth_registered/points" />
+     <remap from="cloud_out" to="/kinect_rgb/depth_registered/points_self_filtered" />
+     <param name="sensor_frame" type="string" value="camera_link" />        
+     <param name="subsample_value" type="double" value="0.0"/>
+     <rosparam command="load" file="$(find pr2_arm_navigation_perception)/config/self_filter_right_left.yaml" />
+  </node>
+  
+</launch>
